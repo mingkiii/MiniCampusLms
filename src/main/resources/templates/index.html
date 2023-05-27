@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>메인 페이지</title>
+</head>
+<body>
+<h1>메인 페이지</h1>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
+<div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
+<hr/>
+
+<div class="home__slider">
+    <div class="bxslider">
+        <div th:each="banner : ${list}">
+            <a th:if="${banner.getTargetStatusType() ==
+                    T(com.zerobase.fastlms.banner.type.TargetStatusType).NEW}"
+               th:href="${banner.getUrl()}" target="_blank">
+                <img th:src="@{${banner.urlFileName}}" th:alt="${banner.getName()} ">
+            </a>
+            <a th:if="${banner.getTargetStatusType() ==
+                    T(com.zerobase.fastlms.banner.type.TargetStatusType).CUR}"
+               th:href="${banner.getUrl()}">
+                <img th:src="@{${banner.urlFileName}}" th:alt="${banner.getName()}">
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(function(){
+        $('.bxslider').bxSlider({
+            mode: 'fade',
+            speed: 500,
+            captions: true,
+            slideWidth: 800,
+            touchEnabled: false
+        });
+    });
+</script>
+
+<!--        <div>-->
+<!--            <img src="/files/2022/12/17/04f4587832b246cda08e920484b4fd58.png"/>-->
+<!--        </div>-->
+
+</body>
+</html>
